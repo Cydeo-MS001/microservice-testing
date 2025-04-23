@@ -1,0 +1,9 @@
+---- Clean and create allure report
+allure generate allure-results --clean -o allure-report
+
+---- Open report
+allure open allure-report
+
+---- Create and open allure report
+allure serve allure-results
+

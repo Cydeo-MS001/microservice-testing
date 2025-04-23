@@ -1,0 +1,1168 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Project API Doc",
+    "description": "API documentation for Ticketing App Project Operations",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://cundi.onthewifi.com:8082",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "oAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "ProjectController",
+      "description": "Project controller endpoints"
+    }
+  ],
+  "paths": {
+    "/api/v1/project/update/{projectCode}": {
+      "put": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Update a project.",
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDTO"
+              },
+              "example": {
+                "projectName": "Demo Project",
+                "startDate": "2024-01-01",
+                "endDate": "2024-12-31",
+                "projectDetail": "This is a sample project for demonstration purposes."
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Project does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Project is successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Project is successfully updated.",
+                  "data": {
+                    "projectName": "Demo Project",
+                    "projectCode": "SP000",
+                    "assignedManager": "john.doe@example.com",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-12-31",
+                    "projectDetail": "This is a sample project for demonstration purposes.",
+                    "projectStatus": "OPEN"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Input(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid Input(s)",
+                  "httpStatus": "BAD_REQUEST",
+                  "localDateTime": "2024-01-01T00:00:00.0000000",
+                  "errorCount": 1,
+                  "validationExceptions": [
+                    {
+                      "errorField": "projectName",
+                      "rejectedValue": "SP",
+                      "reason": "Project name length should be min 3, max 16."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/complete/{projectCode}": {
+      "put": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Complete a project.",
+        "operationId": "completeProject",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Project does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Related tasks cannot be completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Related tasks cannot be completed.",
+                  "httpStatus": "INTERNAL_SERVER_ERROR",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Project is successfully completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Project is successfully completed.",
+                  "data": {
+                    "projectName": "Demo Project",
+                    "projectCode": "SP000",
+                    "assignedManager": "john.doe@example.com",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-12-31",
+                    "projectDetail": "This is a sample project for demonstration purposes.",
+                    "projectStatus": "OPEN"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/create": {
+      "post": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Create a project.",
+        "operationId": "createProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDTO"
+              },
+              "example": {
+                "projectName": "Demo Project",
+                "projectCode": "SP000",
+                "startDate": "2024-01-01",
+                "endDate": "2024-12-31",
+                "projectDetail": "This is a sample project for demonstration purposes."
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "409": {
+            "description": "Project already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project already exists.",
+                  "httpStatus": "CONFLICT",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access is denied",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Project is successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "CREATED",
+                  "message": "Project is successfully created.",
+                  "data": {
+                    "projectName": "Demo Project",
+                    "projectCode": "SP000",
+                    "assignedManager": "john.doe@example.com",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-12-31",
+                    "projectDetail": "This is a sample project for demonstration purposes.",
+                    "projectStatus": "OPEN"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Input(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid Input(s)",
+                  "httpStatus": "BAD_REQUEST",
+                  "localDateTime": "2024-01-01T00:00:00.0000000",
+                  "errorCount": 1,
+                  "validationExceptions": [
+                    {
+                      "errorField": "projectName",
+                      "rejectedValue": "SP",
+                      "reason": "Project name length should be min 3, max 16."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/read/{projectCode}": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Read a project by project code.",
+        "operationId": "getByProjectCode",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Project does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Project is successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Project is successfully retrieved.",
+                  "data": {
+                    "projectName": "Demo Project",
+                    "projectCode": "SP000",
+                    "assignedManager": "john.doe@example.com",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-12-31",
+                    "projectDetail": "This is a sample project for demonstration purposes.",
+                    "projectStatus": "OPEN"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/read/manager/{projectCode}": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Read a manager by project code.",
+        "operationId": "getManagerByProjectCode",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Project does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Manager information is successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": "{\n  \"success\": true,\n  \"statusCode\": \"OK\",\n  \"message\": \"Manager information is successfully retrieved.\",\n  \"data\": \"john.doe@example.com\",\n}"
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/read/all/manager": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Manager read all projects.",
+        "operationId": "managerGetProjects",
+        "responses": {
+          "200": {
+            "description": "Projects are successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Projects are successfully retrieved.",
+                  "data": [
+                    {
+                      "projectName": "Demo Project - 1",
+                      "projectCode": "SP000",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "OPEN"
+                    },
+                    {
+                      "projectName": "Demo Project - 2",
+                      "projectCode": "SP999",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "IN_PROGRESS"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access is denied",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/read/all/details": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Read all projects with details.",
+        "operationId": "getProjectsWithDetails",
+        "responses": {
+          "500": {
+            "description": "Project details cannot be retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project details cannot be retrieved.",
+                  "httpStatus": "INTERNAL_SERVER_ERROR",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access is denied",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Projects are successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Projects are successfully retrieved.",
+                  "data": [
+                    {
+                      "projectName": "Demo Project - 1",
+                      "projectCode": "SP000",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "OPEN",
+                      "completedTaskCount": 0,
+                      "nonCompletedTaskCount": 5
+                    },
+                    {
+                      "projectName": "Demo Project - 2",
+                      "projectCode": "SP999",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "IN_PROGRESS",
+                      "completedTaskCount": 7,
+                      "nonCompletedTaskCount": 3
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/read/all/admin": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Admin read all projects.",
+        "operationId": "adminGetProjects",
+        "responses": {
+          "200": {
+            "description": "Projects are successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Projects are successfully retrieved.",
+                  "data": [
+                    {
+                      "projectName": "Demo Project - 1",
+                      "projectCode": "SP000",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "OPEN"
+                    },
+                    {
+                      "projectName": "Demo Project - 2",
+                      "projectCode": "SP999",
+                      "assignedManager": "john.doe@example.com",
+                      "startDate": "2024-01-01",
+                      "endDate": "2024-12-31",
+                      "projectDetail": "This is a sample project for demonstration purposes.",
+                      "projectStatus": "IN_PROGRESS"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access is denied",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/count/manager/{assignedManager}": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Read non completed project count of an assigned manager by username.",
+        "operationId": "getNonCompletedCountByAssignedManager",
+        "parameters": [
+          {
+            "name": "assignedManager",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Access is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access is denied",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Project count is retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": "OK",
+                  "message": "Project count is retrieved.",
+                  "data": 5
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/check/{projectCode}": {
+      "get": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Check if project exists or not by project code.",
+        "operationId": "checkByProjectCode",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "User does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Project is already completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project is already completed.",
+                  "httpStatus": "CONFLICT",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Project exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWrapper"
+                },
+                "example": "{\n  \"success\": true,\n  \"statusCode\": \"OK\",\n  \"message\": \"Project exists.\",\n  \"data\": true,\n}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/project/delete/{projectCode}": {
+      "delete": {
+        "tags": [
+          "ProjectController"
+        ],
+        "summary": "Delete a project.",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "name": "projectCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Project does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Project does not exist.",
+                  "httpStatus": "NOT_FOUND",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access denied, make sure that you are working on your own project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Access denied, make sure that you are working on your own project.",
+                  "httpStatus": "FORBIDDEN",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Related tasks cannot be deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionWrapper"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Related tasks cannot be deleted.",
+                  "httpStatus": "INTERNAL_SERVER_ERROR",
+                  "localDateTime": "2024-01-01T00:00:00.0000000"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Project is successfully completed."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProjectDTO": {
+        "required": [
+          "endDate",
+          "projectCode",
+          "projectName",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "projectName": {
+            "maxLength": 16,
+            "minLength": 3,
+            "type": "string"
+          },
+          "projectCode": {
+            "maxLength": 5,
+            "minLength": 5,
+            "type": "string"
+          },
+          "assignedManager": {
+            "type": "string",
+            "readOnly": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "projectDetail": {
+            "type": "string"
+          },
+          "projectStatus": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "COMPLETED"
+            ]
+          },
+          "completedTaskCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "nonCompletedTaskCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        }
+      },
+      "ExceptionWrapper": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "type": "string",
+            "enum": [
+              "100 CONTINUE",
+              "101 SWITCHING_PROTOCOLS",
+              "102 PROCESSING",
+              "103 CHECKPOINT",
+              "200 OK",
+              "201 CREATED",
+              "202 ACCEPTED",
+              "203 NON_AUTHORITATIVE_INFORMATION",
+              "204 NO_CONTENT",
+              "205 RESET_CONTENT",
+              "206 PARTIAL_CONTENT",
+              "207 MULTI_STATUS",
+              "208 ALREADY_REPORTED",
+              "226 IM_USED",
+              "300 MULTIPLE_CHOICES",
+              "301 MOVED_PERMANENTLY",
+              "302 FOUND",
+              "302 MOVED_TEMPORARILY",
+              "303 SEE_OTHER",
+              "304 NOT_MODIFIED",
+              "305 USE_PROXY",
+              "307 TEMPORARY_REDIRECT",
+              "308 PERMANENT_REDIRECT",
+              "400 BAD_REQUEST",
+              "401 UNAUTHORIZED",
+              "402 PAYMENT_REQUIRED",
+              "403 FORBIDDEN",
+              "404 NOT_FOUND",
+              "405 METHOD_NOT_ALLOWED",
+              "406 NOT_ACCEPTABLE",
+              "407 PROXY_AUTHENTICATION_REQUIRED",
+              "408 REQUEST_TIMEOUT",
+              "409 CONFLICT",
+              "410 GONE",
+              "411 LENGTH_REQUIRED",
+              "412 PRECONDITION_FAILED",
+              "413 PAYLOAD_TOO_LARGE",
+              "413 REQUEST_ENTITY_TOO_LARGE",
+              "414 URI_TOO_LONG",
+              "414 REQUEST_URI_TOO_LONG",
+              "415 UNSUPPORTED_MEDIA_TYPE",
+              "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+              "417 EXPECTATION_FAILED",
+              "418 I_AM_A_TEAPOT",
+              "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+              "420 METHOD_FAILURE",
+              "421 DESTINATION_LOCKED",
+              "422 UNPROCESSABLE_ENTITY",
+              "423 LOCKED",
+              "424 FAILED_DEPENDENCY",
+              "425 TOO_EARLY",
+              "426 UPGRADE_REQUIRED",
+              "428 PRECONDITION_REQUIRED",
+              "429 TOO_MANY_REQUESTS",
+              "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+              "500 INTERNAL_SERVER_ERROR",
+              "501 NOT_IMPLEMENTED",
+              "502 BAD_GATEWAY",
+              "503 SERVICE_UNAVAILABLE",
+              "504 GATEWAY_TIMEOUT",
+              "505 HTTP_VERSION_NOT_SUPPORTED",
+              "506 VARIANT_ALSO_NEGOTIATES",
+              "507 INSUFFICIENT_STORAGE",
+              "508 LOOP_DETECTED",
+              "509 BANDWIDTH_LIMIT_EXCEEDED",
+              "510 NOT_EXTENDED",
+              "511 NETWORK_AUTHENTICATION_REQUIRED"
+            ]
+          },
+          "localDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validationExceptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationExceptionWrapper"
+            }
+          }
+        }
+      },
+      "ValidationExceptionWrapper": {
+        "type": "object",
+        "properties": {
+          "errorField": {
+            "type": "string"
+          },
+          "rejectedValue": {
+            "type": "object"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseWrapper": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "100 CONTINUE",
+              "101 SWITCHING_PROTOCOLS",
+              "102 PROCESSING",
+              "103 CHECKPOINT",
+              "200 OK",
+              "201 CREATED",
+              "202 ACCEPTED",
+              "203 NON_AUTHORITATIVE_INFORMATION",
+              "204 NO_CONTENT",
+              "205 RESET_CONTENT",
+              "206 PARTIAL_CONTENT",
+              "207 MULTI_STATUS",
+              "208 ALREADY_REPORTED",
+              "226 IM_USED",
+              "300 MULTIPLE_CHOICES",
+              "301 MOVED_PERMANENTLY",
+              "302 FOUND",
+              "302 MOVED_TEMPORARILY",
+              "303 SEE_OTHER",
+              "304 NOT_MODIFIED",
+              "305 USE_PROXY",
+              "307 TEMPORARY_REDIRECT",
+              "308 PERMANENT_REDIRECT",
+              "400 BAD_REQUEST",
+              "401 UNAUTHORIZED",
+              "402 PAYMENT_REQUIRED",
+              "403 FORBIDDEN",
+              "404 NOT_FOUND",
+              "405 METHOD_NOT_ALLOWED",
+              "406 NOT_ACCEPTABLE",
+              "407 PROXY_AUTHENTICATION_REQUIRED",
+              "408 REQUEST_TIMEOUT",
+              "409 CONFLICT",
+              "410 GONE",
+              "411 LENGTH_REQUIRED",
+              "412 PRECONDITION_FAILED",
+              "413 PAYLOAD_TOO_LARGE",
+              "413 REQUEST_ENTITY_TOO_LARGE",
+              "414 URI_TOO_LONG",
+              "414 REQUEST_URI_TOO_LONG",
+              "415 UNSUPPORTED_MEDIA_TYPE",
+              "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+              "417 EXPECTATION_FAILED",
+              "418 I_AM_A_TEAPOT",
+              "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+              "420 METHOD_FAILURE",
+              "421 DESTINATION_LOCKED",
+              "422 UNPROCESSABLE_ENTITY",
+              "423 LOCKED",
+              "424 FAILED_DEPENDENCY",
+              "425 TOO_EARLY",
+              "426 UPGRADE_REQUIRED",
+              "428 PRECONDITION_REQUIRED",
+              "429 TOO_MANY_REQUESTS",
+              "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+              "500 INTERNAL_SERVER_ERROR",
+              "501 NOT_IMPLEMENTED",
+              "502 BAD_GATEWAY",
+              "503 SERVICE_UNAVAILABLE",
+              "504 GATEWAY_TIMEOUT",
+              "505 HTTP_VERSION_NOT_SUPPORTED",
+              "506 VARIANT_ALSO_NEGOTIATES",
+              "507 INSUFFICIENT_STORAGE",
+              "508 LOOP_DETECTED",
+              "509 BANDWIDTH_LIMIT_EXCEEDED",
+              "510 NOT_EXTENDED",
+              "511 NETWORK_AUTHENTICATION_REQUIRED"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oAuth": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "http://cundi.onthewifi.com:8080/auth/realms/cydeo-dev/protocol/openid-connect/auth",
+            "tokenUrl": "http://cundi.onthewifi.com:8080/auth/realms/cydeo-dev/protocol/openid-connect/token",
+            "scopes": {
+              "openid": ""
+            }
+          }
+        }
+      }
+    }
+  }
+}
