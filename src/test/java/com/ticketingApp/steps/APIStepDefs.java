@@ -1,6 +1,7 @@
 package com.ticketingApp.steps;
 
 import com.ticketingApp.utility.api.APIUtil;
+import com.ticketingApp.utility.data.DataGenerator;
 import com.ticketingApp.utility.data.DateHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -88,6 +89,24 @@ public class APIStepDefs {
                 Assert.assertTrue(Objects.nonNull(eachMap.get(eachPath)));
             }
         }
+    }
+
+    @Given("Content-Type header is {string}")
+    public void content_type_header_is(String contentType) {
+        givenPart.contentType(contentType);
+    }
+    @Given("I create a random {string} as request body")
+    public void i_create_a_random_as_request_body(String data) {
+        givenPart.body(DataGenerator.createBody(data));
+    }
+    @When("I send POST request to {string} endpoint")
+    public void i_send_post_request_to_endpoint(String endpoint) {
+        response = givenPart.when().post(endpoint);
+        jp = response.jsonPath();
+        thenPart = response.then();
+
+        LOG.info("Response body {}",response.prettyPrint());
+
     }
 
 

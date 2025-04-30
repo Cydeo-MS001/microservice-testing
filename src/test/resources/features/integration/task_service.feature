@@ -4,7 +4,6 @@ Feature: Task Service Access and Manipulation
   I should be able to access the task service
   So that I can manipulate tasks as expected
 
-
   Scenario: Creating a new task and verifying it is creation
     Given I am logged into the "task.service" as a "MANAGER"
     And Accept header is "application/json"
