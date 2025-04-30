@@ -7,3 +7,21 @@ allure open allure-report
 ---- Create and open allure report
 allure serve allure-results
 
+
+---- 25.04 Friday
+- We will talk about testing strategies
+- Introduce Framework
+    - Set Environmental variables
+    - Credentials
+    - Create Postman request for authorization
+    - introduction to Cucumber
+
+---- 30.04  Wednesday
+- Sample from FakeStore
+- First Run - POSTMAN
+- First Run - Cucumber
+- Implementation Example
+- Integration Test --> /task/create
+
+
+
