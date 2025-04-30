@@ -1,6 +1,7 @@
 package com.ticketingApp.steps;
 
 import com.ticketingApp.utility.api.APIUtil;
+import com.ticketingApp.utility.data.DateHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class APIStepDefs {
@@ -60,20 +63,31 @@ public class APIStepDefs {
     public void the_field_should_be(String path, String expectedValue) {
        Assert.assertEquals(expectedValue,jp.getString(path));
     }
-
+    List<Map<String,String>> allData;
     @Then("the {string} field should contains data")
     public void the_field_should_contains_data(String path) {
+        allData=jp.getList(path);
+        System.out.println("allData = " + allData);
+        Assert.assertTrue(Objects.nonNull(allData));
 
     }
 
     @Then("{string} should be later than {string}")
     public void should_be_later_than(String endDate, String startDate) {
+        for (Map<String, String> eachMap : allData) {
+            boolean endDateAfterStartDate = DateHelper.isEndDateAfterStartDate(eachMap.get(endDate), eachMap.get(startDate));
+            Assert.assertTrue(endDateAfterStartDate);
+        }
 
     }
 
     @Then("following fields should not be null")
     public void following_fields_should_not_be_null(List<String> paths) {
-
+        for (Map<String, String> eachMap : allData) {
+            for (String eachPath : paths) {
+                Assert.assertTrue(Objects.nonNull(eachMap.get(eachPath)));
+            }
+        }
     }
 
 
