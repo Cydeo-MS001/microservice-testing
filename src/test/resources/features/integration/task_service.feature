@@ -6,7 +6,7 @@ Feature: Task Service Access and Manipulation
 
 
   Scenario: Creating a new task and verifying it is creation
-    Given I am logged into the "task.service" as a "manager"
+    Given I am logged into the "task.service" as a "MANAGER"
     And Accept header is "application/json"
     And Content-Type header is "application/json"
     And I create a random "task" as request body
