@@ -19,6 +19,7 @@ allure serve allure-results
 ---- 30.04  Wednesday
 - Sample from FakeStore
 - First Run - POSTMAN
+- Check ENV Variables - for ALL
 - First Run - Cucumber
 - Implementation Example
 - Integration Test --> /task/create

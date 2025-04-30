@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features" ,
         glue = "com/ticketingApp/steps",
-        dryRun = false,
-        tags=""
+        dryRun = true,
+        tags="@sample"
 )
 public class CukesRunner {
 
