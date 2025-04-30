@@ -32,11 +32,12 @@ public class APIStepDefs {
     }
     @Given("Accept header is {string}")
     public void accept_header_is(String acceptHeader) {
+        givenPart.accept(acceptHeader);
 
     }
     @Given("I set basePath for {string}")
-    public void i_set_base_path_for(String basePath) {
-
+    public void i_set_base_path_for(String serviceName) {
+        givenPart.basePath(APIUtil.setBasePath(serviceName));
     }
     @When("I send GET request to {string} endpoint")
     public void i_send_get_request_to_endpoint(String endpoint) {
