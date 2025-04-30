@@ -1,5 +1,6 @@
 package com.ticketingApp.steps;
 
+import com.ticketingApp.utility.api.APIUtil;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,6 +24,10 @@ public class APIStepDefs {
 
     @Given("I am logged into the {string} as a {string}")
     public void i_am_logged_into_the_as_a(String service, String role) {
+
+        String baseURI = APIUtil.setBaseURI(service);
+        String token = APIUtil.createToken(role);
+        givenPart=APIUtil.initRequest(token,baseURI);
 
     }
     @Given("Accept header is {string}")
