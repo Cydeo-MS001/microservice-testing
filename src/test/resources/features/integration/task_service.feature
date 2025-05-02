@@ -15,14 +15,14 @@ Feature: Task Service Access and Manipulation
 
 
   Scenario: Retrieving a task by valid taskCode
-    Given I am logged into the "task.service" as a "employee"
+    Given I am logged into the "task.service" as a "EMPLOYEE"
     And Accept header is "application/json"
     And Path Param "taskCode" is "VALID TASK CODE"
     When I send GET request to "read/{taskCode}" endpoint
     And the "data.taskCode" field should not be null
 
   Scenario: Fetch tasks for a specific project
-    Given I am logged into the "task.service" as a "manager"
+    Given I am logged into the "task.service" as a "MANAGER"
     And Accept header is "application/json"
     And Path Param "projectCode" is "VALID PROJECT CODE"
     When I send GET request to "/read/all/{projectCode}" endpoint
