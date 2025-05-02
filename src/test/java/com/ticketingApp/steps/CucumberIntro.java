@@ -1,6 +1,7 @@
 package com.ticketingApp.steps;
 
 import com.ticketingApp.utility.api.APIUtil;
+import com.ticketingApp.utility.db.DB_Util;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -55,5 +56,12 @@ public class CucumberIntro {
               thenPart.body("id",Matchers.is(71));
 
         //    And the "category.name" field should be "Clothes"
+    }
+
+    @Test
+    public void database() {
+        DB_Util.createConnection("task.service");
+        DB_Util.createConnection("project.service");
+        DB_Util.createConnection("user.service");
     }
 }

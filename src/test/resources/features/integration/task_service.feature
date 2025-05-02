@@ -13,7 +13,6 @@ Feature: Task Service Access and Manipulation
     Then status code should be 201
     And the "message" field should be "Task is successfully created."
 
-
   Scenario: Retrieving a task by valid taskCode
     Given I am logged into the "task.service" as a "EMPLOYEE"
     And Accept header is "application/json"

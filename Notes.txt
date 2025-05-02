@@ -24,5 +24,13 @@ allure serve allure-results
 - Implementation Example
 - Integration Test --> /task/create
 
+----- 02.05 Friday
+- Survey
+- Review
+- More Example with Integration Test
+- E2E Test Implementation
+- Mock Server
+- Q&A
+
 
 

@@ -32,6 +32,21 @@ public class DB_Util {
     }
 
     /**
+     * Gets connection Strign based on service name
+     * @param serviceName
+     */
+    public static void createConnection(String serviceName){
+        String dbUrl=ConfigurationReader.getProperty(serviceName+".dbUrl");
+        System.out.println("dbUrl = " + dbUrl);
+        String username=ConfigurationReader.getProperty(serviceName+".db");
+        System.out.println("username = " + username);
+        String password=ConfigurationReader.getProperty(serviceName+".pass");
+        System.out.println("password = " + password);
+
+        createConnection(dbUrl,username,password);
+    }
+
+    /**
      * Run the sql query provided and return ResultSet object
      * @param sql the query to run
      * @return ResultSet object  that contains data

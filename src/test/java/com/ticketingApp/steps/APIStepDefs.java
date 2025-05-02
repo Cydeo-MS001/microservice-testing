@@ -3,6 +3,7 @@ package com.ticketingApp.steps;
 import com.ticketingApp.utility.api.APIUtil;
 import com.ticketingApp.utility.data.DataGenerator;
 import com.ticketingApp.utility.data.DateHelper;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -41,6 +42,8 @@ public class APIStepDefs {
         givenPart.accept(acceptHeader);
 
     }
+
+    // givenPart.path("taskCode",)
 
     @Given("I set basePath for {string}")
     public void i_set_base_path_for(String serviceName) {
@@ -110,5 +113,10 @@ public class APIStepDefs {
     }
 
 
+    @And("Path Param {string} is {string}")
+    public void pathParamIs(String pathParam, String value) {
+        givenPart.pathParam(pathParam,DataGenerator.createPathParam(value));
+
+    }
 }
 
