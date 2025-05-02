@@ -42,3 +42,4 @@ Feature: Manager creates a project and assigns tasks, then completes the project
     And all "data.taskStatus" field should be "COMPLETED"
 
     # Verify against database
+    And Verify all task in database for same "PROJECT_CODE" is "COMPLETED"
