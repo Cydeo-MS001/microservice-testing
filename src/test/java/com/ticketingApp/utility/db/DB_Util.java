@@ -11,7 +11,7 @@ import java.util.Map;
 public class DB_Util {
 
     private static Connection con ;
-    private static PreparedStatement stm ;
+    private static Statement stm ;
     private static ResultSet rs ;
     private static ResultSetMetaData rsmd ;
 
@@ -54,7 +54,7 @@ public class DB_Util {
     public static ResultSet runQuery(String sql){
 
         try {
-            stm = (PreparedStatement) con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = stm.executeQuery(sql); // setting the value of ResultSet object
             rsmd = rs.getMetaData() ;  // setting the value of ResultSetMetaData for reuse
         }catch(Exception e){

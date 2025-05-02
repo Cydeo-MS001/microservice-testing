@@ -61,7 +61,10 @@ public class CucumberIntro {
     @Test
     public void database() {
         DB_Util.createConnection("task.service");
-        DB_Util.createConnection("project.service");
-        DB_Util.createConnection("user.service");
+
+        DB_Util.runQuery("SELECT * FROM TASKS");
+
+        int rowCount = DB_Util.getRowCount();
+        System.out.println("rowCount = " + rowCount);
     }
 }
