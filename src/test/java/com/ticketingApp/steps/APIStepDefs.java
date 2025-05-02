@@ -3,6 +3,7 @@ package com.ticketingApp.steps;
 import com.ticketingApp.utility.api.APIUtil;
 import com.ticketingApp.utility.data.DataGenerator;
 import com.ticketingApp.utility.data.DateHelper;
+import com.ticketingApp.utility.session.SessionHelper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -42,8 +43,6 @@ public class APIStepDefs {
         givenPart.accept(acceptHeader);
 
     }
-
-    // givenPart.path("taskCode",)
 
     @Given("I set basePath for {string}")
     public void i_set_base_path_for(String serviceName) {
@@ -117,6 +116,34 @@ public class APIStepDefs {
     public void pathParamIs(String pathParam, String value) {
         givenPart.pathParam(pathParam,DataGenerator.createPathParam(value));
 
+    }
+
+    @And("the {string} field should not be null")
+    public void theFieldShouldNotBeNull(String path) {
+        Assert.assertNotNull(jp.getString(path));
+    }
+
+    @And("I save {string} as a {string}")
+    public void iSaveAsA(String path, String sessionKey) {
+        SessionHelper.setSessionObject(sessionKey,jp.getString(path));
+    }
+
+    @When("I send PUT request to {string} endpoint")
+    public void iSendPUTRequestToEndpoint(String endpoint) {
+        response = givenPart.when().put(endpoint);
+        jp = response.jsonPath();
+        thenPart = response.then();
+
+        LOG.info("Response body {}",response.prettyPrint());
+    }
+
+    @And("all {string} field should be {string}")
+    public void allFieldShouldBe(String path, String value) {
+        List<String> allTaskStatus = jp.getList(path);
+
+        for (String eachTaskStatus : allTaskStatus) {
+            Assert.assertEquals(eachTaskStatus,value);
+        }
     }
 }
 

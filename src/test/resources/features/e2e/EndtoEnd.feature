@@ -40,3 +40,5 @@ Feature: Manager creates a project and assigns tasks, then completes the project
     And I send GET request to "/read/all/{projectCode}" endpoint
     Then status code should be 200
     And all "data.taskStatus" field should be "COMPLETED"
+
+    # Verify against database
